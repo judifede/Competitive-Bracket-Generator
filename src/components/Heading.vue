@@ -1,6 +1,11 @@
 <template>
   <component :is="tag" :class="['box h-[70px] text-4xl text-orange-400', additionalClasses]">
-    <slot></slot>
+    <div class="inline-flex flex-col gap-3">
+      <slot></slot> <!-- Slot por defecto -->
+      <code class="text-sm self-end">
+        <slot name="developed"></slot> <!-- Slot nombrado -->
+      </code>
+    </div>
   </component>
 </template>
 

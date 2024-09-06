@@ -2,11 +2,26 @@
 @tailwind components;
 @tailwind utilities;
 
+@layer components {
+  .box {
+    @apply inline-block py-3 px-6 w-full;
+  }
+  .border-rounded-white{
+    @apply border rounded-2xl border-white
+  }
+  .box-input {
+    @apply inline-block py-3 px-6 rounded-2xl w-full;
+  }
+
+  .container-label {
+    @apply !flex justify-between items-center gap-2 !w-full font-medium;
+  }
+}
+
 :root {
   color-scheme: dark;
   color: #ffffff;
   background-color: #213547;
-
 }
 
 body {
@@ -22,14 +37,7 @@ body {
   text-align: center;
 }
 
-.box{
-  @apply inline-block w-fit py-3 px-6 border rounded-2xl border-white
-}
-
-.box-input{
-  @apply inline-block w-fit py-3 px-6 border rounded-2xl 
-}
-
-.container-label{
-  @apply !flex justify-between items-center gap-2 !w-full font-medium
+textarea {
+  field-sizing: content;
+  @apply max-h-[120px] overflow-hidden;
 }
