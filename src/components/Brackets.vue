@@ -1,7 +1,6 @@
 <template>
   <svg :width="svgWidth" :height="svgHeight">
     <g v-for="(player, index) in players" :key="index">
-      
       <!-- Rectángulo para cada jugador -->
       <rect
         :x="0"
@@ -42,19 +41,11 @@
       />
     </g>
 
-    <!-- Rectángulo final para el ganador -->
-    <rect
-      :x="rectWidth + lineLength * 2"
-      :y="svgHeight / 2 - rectHeight / 2"
-      :width="rectWidth"
-      :height="rectHeight"
-      fill="none"
-      stroke="orange"
-    />
-
     <!-- Trofeo de ganador -->
     <g
-      transform="translate(420,150) scale(0.005,-0.005)"
+      :transform="`translate(${rectWidth + lineLength * 2 + rectWidth / 2.4},${
+        svgHeight / 2 - rectHeight / 2 - 20
+      }) scale(${0.0032},-${0.0032})`"
       class="fill-orange-400"
     >
       <path
@@ -73,6 +64,28 @@
         -318 42 -49 65 -63 165 -32 217 14 24 70 72 84 72 4 0 20 -20 38 -45z"
       />
     </g>
+
+    <!-- Rectángulo final para el ganador -->
+    <g>
+      <rect
+      :x="rectWidth + lineLength * 2"
+      :y="svgHeight / 2 - rectHeight / 2"
+      :width="rectWidth"
+      :height="rectHeight"
+      fill="none"
+      stroke="orange"
+      />
+      <!-- Texto ganador -->
+      <text
+        :x="rectWidth + lineLength * 2 + rectWidth / 2.4"
+        :y="(svgHeight / 2 - rectHeight / 2) + 20"
+        font-size="14"
+        fill="white"
+      >
+        {{ winnerProps }}
+        winner
+      </text>
+    </g>
   </svg>
 </template>
 
@@ -82,6 +95,10 @@ import { computed } from 'vue'
 const props = defineProps({
   playersProps: {
     type: Array,
+    required: true,
+  },
+  winnerProps: {
+    type: String,
     required: true,
   },
 })
@@ -96,9 +113,12 @@ const rectHeight = 30
 const gap = 40
 const lineLength = 30
 
-const svgWidth = computed(() => rectWidth.value * 2 + lineLength * 2)
+const svgWidth = computed(() => rectWidth.value * 3 + lineLength * 2)
 const svgHeight = computed(() =>
-  Math.max(props.playersProps.length * (rectHeight + gap), rectHeight + gap)
+  Math.max(
+    props.playersProps.length * (rectHeight + gap * 1.2),
+    rectHeight + gap
+  )
 )
 
 const players = computed(() => props.playersProps)
@@ -108,5 +128,4 @@ const players = computed(() => props.playersProps)
 text {
   fill: white;
 }
-
 </style>
