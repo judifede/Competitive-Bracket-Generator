@@ -6,8 +6,8 @@
   .box {
     @apply inline-block py-3 px-6 w-full;
   }
-  .border-rounded-white{
-    @apply border rounded-2xl border-white
+  .border-rounded-white {
+    @apply border rounded-2xl border-white;
   }
   .box-input {
     @apply inline-block py-3 px-6 rounded-2xl w-full;
@@ -16,6 +16,7 @@
   .container-label {
     @apply !flex justify-between items-center gap-2 !w-full font-medium;
   }
+
 }
 
 :root {

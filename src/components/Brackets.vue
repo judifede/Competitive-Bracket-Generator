@@ -43,7 +43,7 @@
 
     <!-- Trofeo de ganador -->
     <g
-      :transform="`translate(${rectWidth + lineLength * 2 + rectWidth / 2.4},${
+      :transform="`translate(${rectWidth + lineLength * 3 + rectWidth / 2.4},${
         svgHeight / 2 - rectHeight / 2 - 20
       }) scale(${0.0032},-${0.0032})`"
       class="fill-orange-400"
@@ -68,22 +68,21 @@
     <!-- Rectángulo final para el ganador -->
     <g>
       <rect
-      :x="rectWidth + lineLength * 2"
-      :y="svgHeight / 2 - rectHeight / 2"
-      :width="rectWidth"
-      :height="rectHeight"
-      fill="none"
-      stroke="orange"
+        :x="rectWidth + lineLength * 3"
+        :y="svgHeight / 2 - rectHeight / 2"
+        :width="rectWidth"
+        :height="rectHeight"
+        fill="none"
+        stroke="orange"
       />
       <!-- Texto ganador -->
       <text
-        :x="rectWidth + lineLength * 2 + rectWidth / 2.4"
-        :y="(svgHeight / 2 - rectHeight / 2) + 20"
+        :x="rectWidth + lineLength * 3 + 10"
+        :y="svgHeight / 2 - rectHeight / 2 + 20"
         font-size="14"
         fill="white"
       >
         {{ winnerProps }}
-        winner
       </text>
     </g>
   </svg>
@@ -93,7 +92,7 @@
 import { computed } from 'vue'
 
 const props = defineProps({
-  playersProps: {
+  players: {
     type: Array,
     required: true,
   },
@@ -104,8 +103,16 @@ const props = defineProps({
 })
 
 const rectWidth = computed(() => {
+  if(Math.max(...props.players.map((name) => name.toString().length)) > 10){
+    return 200
+  }
+  if (props.players.length <= 2) {
+    return (
+      Math.max(...props.players.map((name) => name.toString().length)) * 20
+    )
+  }
   return (
-    Math.max(...props.playersProps.map((name) => name.toString().length)) * 10
+    Math.max(...props.players.map((name) => name.toString().length)) * 10
   )
 })
 
@@ -116,12 +123,12 @@ const lineLength = 30
 const svgWidth = computed(() => rectWidth.value * 3 + lineLength * 2)
 const svgHeight = computed(() =>
   Math.max(
-    props.playersProps.length * (rectHeight + gap * 1.2),
+    props.players.length * (rectHeight + gap * 1.2),
     rectHeight + gap
   )
 )
 
-const players = computed(() => props.playersProps)
+const players = computed(() => props.players)
 </script>
 
 <style scoped>

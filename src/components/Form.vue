@@ -30,18 +30,13 @@
         <option value="Free for all" disabled></option>
       </datalist>
 
-      <textarea
-        placeholder="Añadir participantes separados por coma (,)"
-        class="box w-full !bg-[#2A2A2A] text-white"
+      <FormPlayers
         id="players"
         name="players"
-        v-model="tournamentPlayers.items"
-        @input="validateTextArea"
-        :class="{ 'no-valid': !isTextAreaValid }"
-      ></textarea>
-      <div v-if="!isTextAreaValid" class="error-message">
-        El contenido debe estar separado por comas.
-      </div>
+        @isTextAreaValid="handleIsTextAreaValid"
+        v-model:items="tournamentPlayers.items"
+      ></FormPlayers>
+
       <div v-if="!isFormValid" class="error-message">
         Todos los campos deben ser rellenados.
       </div>
@@ -59,7 +54,8 @@
 </template>
 
 <script setup>
-import Heading from './Heading.vue'
+import Heading from '../assets/Heading.vue'
+import FormPlayers from './FormPlayers.vue'
 
 import { ref, reactive, computed } from 'vue'
 /*
@@ -71,12 +67,17 @@ computed -> variable de estado con propiedades calculadas
 const tournamentName = ref('')
 const tournamentFormat = ref('')
 
+//FormPlayers
 const tournamentPlayers = reactive({
   items: '',
 })
 
 const isTextAreaValid = ref(false)
 
+const handleIsTextAreaValid = (state) => {
+  isTextAreaValid.value = state
+}
+//End FormPlayers
 const isFormValid = computed(() => {
   return (
     isTextAreaValid.value &&
@@ -85,28 +86,12 @@ const isFormValid = computed(() => {
   )
 })
 
-const validateTextArea = () => {
-  const textAreaContent = tournamentPlayers.items.trim()
-
-  if (textAreaContent === '') {
-    isTextAreaValid.value = false
-    return
-  }
-
-  if (textAreaContent.includes(',')) {
-    const items = textAreaContent.split(',')
-    isTextAreaValid.value = items.every((item) => item.trim() !== '')
-  } else {
-    isTextAreaValid.value = false
-  }
-}
-
 const emit = defineEmits(['submit-form'])
 
 const submitForm = () => {
-  if (isFormValid) {
+  if (isFormValid && tournamentPlayers.items) {
     //Quitar saltos de línea y espacios de los extremos
-    tournamentPlayers.items = tournamentPlayers.items.trim().replace(/\n/g, '');
+    tournamentPlayers.items = tournamentPlayers.items.trim().replace(/\n/g, '')
 
     emit('submit-form', {
       tournamentName: tournamentName,

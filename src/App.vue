@@ -19,7 +19,7 @@
 <script setup>
 // import HelloWorld from './components/HelloWorld.vue'
 import { ref } from 'vue'
-import Heading from './components/Heading.vue'
+import Heading from './assets/Heading.vue'
 import Form from './components/Form.vue'
 import Game from './components/Game.vue'
 

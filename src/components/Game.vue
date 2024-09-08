@@ -27,30 +27,45 @@
       </p>
     </article>
     <article class="min-h-16 flex justify-center items-center">
-      <Brackets :playersProps="playersProps" :winnerProps="winnerProps"></Brackets>
+      <Brackets :players="players" :winnerProps="winnerProps"></Brackets>
     </article>
 
     <article class="flex justify-between gap-8">
       <div>
-        <button @click="newPlayers">Renovar brackets</button>
+        <!-- 
+        TODO: Prueba 
+        <button @click="newPlayers">Renovar brackets</button> -->
+        <!-- <button @click="newPlayers2">Renovar brackets 2</button> -->
+        <button @click="openUpdateModal">Actualizar brackets</button>
       </div>
       <div>
-        <button @click="openModal">Elegir ganador</button>
+        <button @click="openWinnerModal">Elegir ganador</button>
       </div>
-      <PlayersModal 
-      :showModal="isModalVisible"
-      :title="modalTitle"
-      :items="players"
-      @close="closeModal"
-    />
     </article>
   </section>
+  <PlayersModal
+    :showModal="isWinnerModalVisible"
+    title="Elegir ganador"
+    :winnerModal="true"
+    :items="players"
+    @winnerProps="handleWinnerProps"
+    @close="closeWinnerModal"
+  />
+
+  <PlayersModal
+    title="Actualizar brackets"
+    :showModal="isUpdateModalVisible"
+    :updatePlayers="true"
+    :items="players"
+    :handleUpdatePlayers="handleUpdatePlayers"
+    @close="closeUpdateModal"
+  />
 </template>
 
 <script setup>
-import Heading from './Heading.vue'
+import Heading from '../assets/Heading.vue'
 import Brackets from './Brackets.vue'
-import PlayersModal from './PlayersModal.vue';
+import PlayersModal from './PlayersModal.vue'
 
 import { ref, computed, watch } from 'vue'
 
@@ -62,11 +77,15 @@ const props = defineProps({
 })
 
 const players = ref([])
-const winnerProps = ref("")
+const winnerProps = ref('')
+
+const handleWinnerProps = (playerName) => {
+  winnerProps.value = playerName
+}
 
 players.value = props.gameData.tournamentPlayers.split(',')
-
-const playersProps = computed(() => players.value)
+//TODO: Prueba
+// const players = computed(() => players.value)
 
 const shuffleArr = (arr) => {
   return arr.sort(() => Math.random() - 0.5)
@@ -74,38 +93,44 @@ const shuffleArr = (arr) => {
 
 const shufflePlayers = () => {
   players.value = shuffleArr([...players.value])
-  console.log(players.value)
 }
 
+//TODO: Prueba
 const newPlayers = () => {
-  players.value = ["Cris", "Diego"]
+  players.value = ['Cris', 'Juan Diego Fernández Déniz']
 }
 
+//TODO: Prueba
+const newPlayers2 = () => {
+  players.value = ['Juan Diego Fernández Déniz', 'Cris', 'Ari', 'Bryan']
+}
 
+const handleUpdatePlayers = (playerss) => {
 
+  players.value = playerss.split(',')
+  //TODO: Prueba
+  // players.value = ['Juan Diego Fernández Déniz', 'Cris', 'Ari', 'Bryan']
+}
 
-const isModalVisible = ref(false);
-const modalTitle = ref('Lista de Elementos');
-const modalItems = ref([
-  'Elemento 1',
-  'Elemento 2',
-  'Elemento 3' 
-]);
+const isWinnerModalVisible = ref(false)
 
-const openModal = () => {
-  isModalVisible.value = true;
-};
+const openWinnerModal = () => {
+  isWinnerModalVisible.value = true
+}
 
-const closeModal = () => {
-  isModalVisible.value = false;
-};
+const closeWinnerModal = () => {
+  isWinnerModalVisible.value = false
+}
 
-// watch(
-//   () => props.gameData.tournamentPlayers,
-//   (newValue) => {
-//     players.value = newValue.split(',')
-//   }
-// )
+const isUpdateModalVisible = ref(false)
+
+const openUpdateModal = () => {
+  isUpdateModalVisible.value = true
+}
+
+const closeUpdateModal = () => {
+  isUpdateModalVisible.value = false
+}
 
 const emit = defineEmits(['go-back'])
 
