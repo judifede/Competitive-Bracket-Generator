@@ -41,12 +41,16 @@
         ></FormPlayers>
 
         <Close @click="closeModal" class="cursor-pointer"></Close>
-        <button @click="setUpdatePlayers" class="bg-[#2A2A2A] text-white px-4 py-2 rounded">
+        <button
+          @click="setUpdatePlayers"
+          class="bg-[#2A2A2A] text-white px-4 py-2 rounded"
+        >
           Actualizar
         </button>
       </div>
     </div>
   </vue-final-modal>
+  <Toaster richColors />
 </template>
 
 <script setup>
@@ -54,6 +58,8 @@ import FormPlayers from './Init/FormPlayers.vue'
 import Close from '../assets/Close.vue'
 
 import { ref, reactive, computed } from 'vue'
+
+import { Toaster, toast } from 'vue-sonner'
 
 const props = defineProps({
   showModal: {
@@ -72,18 +78,24 @@ const props = defineProps({
     type: String,
     default: '',
   },
-  handleUpdatePlayers:{
-    type: Function
+  handleUpdatePlayers: {
+    type: Function,
   },
   items: {
     type: Array,
   },
 })
 
-const emit = defineEmits(['update:items', 'update:showModal', 'close', 'winnerProps'])
+const emit = defineEmits([
+  'update:items',
+  'update:showModal',
+  'close',
+  'winnerProps',
+])
 
 const setWinnerProps = (item) => {
   emit('winnerProps', item)
+  toast.success(item + ' ha ganado!')
   emit('close')
 }
 
@@ -100,9 +112,9 @@ const handleIsTextAreaValid = (state) => {
 //End FormPlayers
 
 const setUpdatePlayers = () => {
-  
-  if(isTextAreaValid.value){
+  if (isTextAreaValid.value) {
     props.handleUpdatePlayers(tournamentPlayers.items)
+    toast.info('Jugadores actualizados')
     closeModal()
   }
 }
