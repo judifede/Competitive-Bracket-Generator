@@ -6,6 +6,16 @@
     <section
       class="bg-[#323232] text-black px-12 py-8 box !flex flex-col gap-10"
     >
+    <select
+        id="type"
+        name="type"
+        v-model="tournamentType"
+      >
+        <option value="Torneo">Torneo</option>
+        <option value="Copa">Copa</option>
+        <option value="Liga">Liga</option>
+      </select>
+
       <input
         placeholder="Nombre"
         type="text"
@@ -14,21 +24,18 @@
         v-model="tournamentName"
       />
 
-      <input
+      <select
         placeholder="Formato"
-        type="text"
-        list="formats"
         id="format"
         name="format"
         v-model="tournamentFormat"
-      />
-      <datalist id="formats">
-        <option value="Single Elimination"></option>
+      >
+        <option value="Single Elimination">Single Elimination</option>
         <option value="Double Elimination" disabled></option>
         <option value="Round Robin" disabled></option>
         <option value="Swiss" disabled></option>
         <option value="Free for all" disabled></option>
-      </datalist>
+      </select>
 
       <FormPlayers
         id="players"
@@ -54,7 +61,7 @@
 </template>
 
 <script setup>
-import Heading from '../assets/Heading.vue'
+import Heading from '../../assets/Heading.vue'
 import FormPlayers from './FormPlayers.vue'
 
 import { ref, reactive, computed } from 'vue'
@@ -65,7 +72,8 @@ computed -> variable de estado con propiedades calculadas
 */
 
 const tournamentName = ref('')
-const tournamentFormat = ref('')
+const tournamentType = ref('Torneo')
+const tournamentFormat = ref('Single Elimination')
 
 //FormPlayers
 const tournamentPlayers = reactive({
@@ -82,6 +90,7 @@ const isFormValid = computed(() => {
   return (
     isTextAreaValid.value &&
     tournamentName.value !== '' &&
+    tournamentType.value !== '' &&
     tournamentFormat.value !== ''
   )
 })
@@ -95,6 +104,7 @@ const submitForm = () => {
 
     emit('submit-form', {
       tournamentName: tournamentName,
+      tournamentType: tournamentType,
       tournamentFormat: tournamentFormat,
       tournamentPlayers: tournamentPlayers.items,
     })
@@ -102,7 +112,7 @@ const submitForm = () => {
 }
 </script>
 
-<style scoped>
+<style scoped lang="postcss">
 .no-valid {
   @apply border border-red-400;
 }
@@ -119,7 +129,7 @@ label {
   @apply text-white container-label;
 }
 
-input {
+input, select{
   @apply box-input bg-[#2A2A2A] text-white;
 }
 

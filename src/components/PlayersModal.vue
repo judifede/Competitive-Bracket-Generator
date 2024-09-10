@@ -8,9 +8,6 @@
     v-model="isOpen"
     class="absolute inset-0 top-2/4 -translate-y-2/4"
   >
-    <!-- classes="modal-container"
-  content-class="modal-content" -->
-
     <div v-if="winnerModal" class="flex items-center justify-center h-full">
       <div
         class="bg-[#323232] p-6 rounded-lg shadow-lg flex flex-col gap-7 px-20 py-10 relative"
@@ -53,7 +50,7 @@
 </template>
 
 <script setup>
-import FormPlayers from './FormPlayers.vue'
+import FormPlayers from './Init/FormPlayers.vue'
 import Close from '../assets/Close.vue'
 
 import { ref, reactive, computed } from 'vue'
@@ -106,6 +103,7 @@ const setUpdatePlayers = () => {
   
   if(isTextAreaValid.value){
     props.handleUpdatePlayers(tournamentPlayers.items)
+    closeModal()
   }
 }
 

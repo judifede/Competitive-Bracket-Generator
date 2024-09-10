@@ -1,4 +1,4 @@
-Competitive Bracket Generator
+Competition Bracket Generator
 
 Inspiración: https://challonge.com/es/tournaments/bracket_generator.html
 

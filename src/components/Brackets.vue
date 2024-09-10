@@ -112,7 +112,7 @@ const rectWidth = computed(() => {
     )
   }
   return (
-    Math.max(...props.players.map((name) => name.toString().length)) * 10
+    Math.max(...props.players.map((name) => name.toString().length)) * 15
   )
 })
 

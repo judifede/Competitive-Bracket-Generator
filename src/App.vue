@@ -1,40 +1,40 @@
 <template>
-  
   <main class="flex flex-col gap-10 items-center">
     <Heading tag="h1">
-      Competitive Bracket Generator
+      Competition Bracket Generator
       <template v-slot:developed>
-        <a href="http://judifede.github.io/" target="_blank">Desarrollado por Diego Fernández</a>
+        <a href="http://judifede.github.io/" target="_blank"
+          >Desarrollado por Diego Fernández</a
+        >
       </template>
     </Heading>
 
-    <Form v-if="!showGame" @submit-form="handleFormSubmit" ></Form>
-    <Game v-else :gameData="gameData" @go-back="handleGoBack" ></Game>
-    
-    <!-- <HelloWorld msg="Vite + Vue" /> -->
+    <Form v-if="!showCompetition" @submit-form="handleFormSubmit"></Form>
+    <Competition
+      v-else
+      :competitionData="competitionData"
+      @go-back="handleGoBack"
+    ></Competition>
   </main>
 </template>
 
-
 <script setup>
-// import HelloWorld from './components/HelloWorld.vue'
 import { ref } from 'vue'
 import Heading from './assets/Heading.vue'
-import Form from './components/Form.vue'
-import Game from './components/Game.vue'
+import Form from './components/Init/Form.vue'
+import Competition from './components/Competition.vue'
 
-const showGame = ref(false)
-const gameData = ref(null)
+const showCompetition = ref(false)
+const competitionData = ref(null)
 
 const handleFormSubmit = (formData) => {
-  gameData.value = formData
-  showGame.value = true
+  competitionData.value = formData
+  showCompetition.value = true
 }
 
 const handleGoBack = () => {
-  showGame.value = false
+  showCompetition.value = false
 }
-
 </script>
 
 <style scoped></style>
