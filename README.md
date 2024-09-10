@@ -2,4 +2,4 @@
 
 Inspiración: https://challonge.com/es/tournaments/bracket_generator.html
 
-Excalidraw: https://excalidraw.com/#room=2ab4901cc755148183a4,p9svCFQbanv-0FoltqJHrQ
+![image](https://github.com/user-attachments/assets/c079cbb6-1458-4d2e-a2ca-471ec39e6219)
