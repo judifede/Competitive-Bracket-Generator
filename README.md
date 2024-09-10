@@ -2,7 +2,6 @@
 
 Inspiración: https://challonge.com/es/tournaments/bracket_generator.html
 
-
 Este proyecto nos permite crear competiciones y se realizó con el objetivo de practicar VueJS y Tailwind CSS.
 Se usa Vue Sonner para notificar las actualizaciones de los enfrentamientos y el ganador.
 
