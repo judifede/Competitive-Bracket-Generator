@@ -1,0 +1,6 @@
+<svg viewBox="0 0 100 100">
+    <path fill="#fb923c" d="M50 10 L60 25 H80 Q85 25 85 30 V40 Q85 45 80 45 H70 Q65 65 50 70 Q35 65 30 45 H20 Q15 45 15 40 V30 Q15 25 20 25 H40 L50 10Z"/>
+    <rect fill="#fb923c" x="40" y="70" width="20" height="5"/>
+    <rect fill="#fb923c" x="45" y="75" width="10" height="15"/>
+    <rect fill="#fb923c" x="30" y="90" width="40" height="5"/>
+</svg>
