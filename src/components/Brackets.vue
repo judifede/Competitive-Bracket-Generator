@@ -43,7 +43,7 @@
 
     <!-- Trofeo de ganador -->
     <g
-      :transform="`translate(${rectWidth + lineLength * 3 + rectWidth / 2.4},${
+      :transform="`translate(${rectWidth + lineLength * 3.5 + rectWidth / 2.4},${
         svgHeight / 2 - rectHeight / 2 - 20
       }) scale(${0.0032},-${0.0032})`"
       class="fill-orange-400"
@@ -68,7 +68,7 @@
     <!-- Rectángulo final para el ganador -->
     <g>
       <rect
-        :x="rectWidth + lineLength * 3"
+        :x="rectWidth + lineLength * 4"
         :y="svgHeight / 2 - rectHeight / 2"
         :width="rectWidth"
         :height="rectHeight"
@@ -77,7 +77,7 @@
       />
       <!-- Texto ganador -->
       <text
-        :x="rectWidth + lineLength * 3 + 10"
+        :x="rectWidth + lineLength * 4 + 10"
         :y="svgHeight / 2 - rectHeight / 2 + 20"
         font-size="14"
         fill="white"
@@ -103,17 +103,19 @@ const props = defineProps({
 })
 
 const rectWidth = computed(() => {
-  if(Math.max(...props.players.map((name) => name.toString().length)) > 10){
-    return 200
-  }
-  if (props.players.length <= 2) {
-    return (
+  let calculatedWidth
+
+   if (props.players.length <= 2) {
+    calculatedWidth = 50 + (
       Math.max(...props.players.map((name) => name.toString().length)) * 20
     )
+  } else {
+    calculatedWidth = 50 + (
+      Math.max(...props.players.map((name) => name.toString().length)) * 15
+    )
   }
-  return (
-    Math.max(...props.players.map((name) => name.toString().length)) * 15
-  )
+
+  return Math.min(calculatedWidth, 300)
 })
 
 const rectHeight = 30
