@@ -3,7 +3,7 @@
     {{competitionData.tournamentType}} {{ competitionData.tournamentName }}
   </Heading>
 
-  <section class="flex flex-col gap-10">
+  <section class="flex flex-col gap-6">
     <article class="flex items-center justify-between min-w-[500px]">
       <button
         class="border-rounded-white px-4 py-2 hover:text-orange-500 hover:border-orange-500"

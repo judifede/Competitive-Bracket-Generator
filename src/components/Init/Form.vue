@@ -17,7 +17,7 @@
       </select>
 
       <input
-        placeholder="Nombre"
+        placeholder="Nombre de la Competición"
         type="text"
         id="name"
         name="name"
