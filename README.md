@@ -20,4 +20,4 @@ Como futuras implementaciones:
 - Mejorar el renderizado dinámico del SVG.
 
 
-![image](https://github.com/user-attachments/assets/c079cbb6-1458-4d2e-a2ca-471ec39e6219)
+![image](https://github.com/user-attachments/assets/3f360c88-07c8-409a-8900-f743837a22f3)
