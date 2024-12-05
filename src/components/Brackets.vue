@@ -135,10 +135,8 @@ const rectHeight = 30
 const gap = 40
 const lineLength = 30
 
-// const svgWidth = computed(() => rectWidth.value * 3 + lineLength * 2)
 const svgWidth = computed(() => {
   const baseWidth = rectWidth.value * 3 + lineLength * 3
-  console.log(windowWidth.value)
 
   if (windowWidth.value <= 768) {
     responsiveMode.value = true
@@ -150,7 +148,7 @@ const svgWidth = computed(() => {
 })
 
 const svgHeight = computed(() =>
-  Math.max(props.players.length * (rectHeight + gap * 1.2), rectHeight + gap)
+  Math.max(props.players.length * (rectHeight + gap), rectHeight + gap)
 )
 
 const dimensionesWinner = computed(() => ({
