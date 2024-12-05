@@ -3,9 +3,14 @@ export default {
   content: [
     "./index.html",
     "./src/**/*.{vue,js,ts,jsx,tsx}",
+    "./src/**/*.css",
   ],
   theme: {
-    extend: {},
+    extend: {
+      spacing: {
+        'form_gap': '2.5rem',
+      },
+    },
   },
   plugins: [],
 }

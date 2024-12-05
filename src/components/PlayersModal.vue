@@ -15,7 +15,7 @@
         <h2 class="text-xl font-bold">{{ title }}</h2>
         <ul class="flex flex-col gap-5">
           <li
-            v-for="(item, index) in items"
+            v-for="(item, index) in players"
             :key="index"
             class="p-2 cursor-pointer border border-purple-100"
             @click="setWinnerProps(item)"
@@ -37,7 +37,7 @@
           id="players"
           name="players"
           @isTextAreaValid="handleIsTextAreaValid"
-          v-model:items="tournamentPlayers.items"
+          v-model:players="tournamentPlayers.players"
         ></FormPlayers>
 
         <Close @click="closeModal" class="cursor-pointer"></Close>
@@ -81,13 +81,13 @@ const props = defineProps({
   handleUpdatePlayers: {
     type: Function,
   },
-  items: {
+  players: {
     type: Array,
   },
 })
 
 const emit = defineEmits([
-  'update:items',
+  'update:players',
   'update:showModal',
   'close',
   'winnerProps',
@@ -101,10 +101,14 @@ const setWinnerProps = (item) => {
 
 //FormPlayers
 const tournamentPlayers = reactive({
-  items: '',
+  players: props.players,
 })
 
-const isTextAreaValid = ref(false)
+const isTextAreaValid = computed({
+  get: () =>
+    tournamentPlayers.players !== null && tournamentPlayers.players.length > 0,
+  set: (value) => {},
+})
 
 const handleIsTextAreaValid = (state) => {
   isTextAreaValid.value = state
@@ -112,11 +116,16 @@ const handleIsTextAreaValid = (state) => {
 //End FormPlayers
 
 const setUpdatePlayers = () => {
-  if (isTextAreaValid.value) {
-    props.handleUpdatePlayers(tournamentPlayers.items)
-    toast.info('Jugadores actualizados')
-    closeModal()
+  if (!isTextAreaValid.value) {
+    return
   }
+  if (typeof tournamentPlayers.players === 'string') {
+    props.handleUpdatePlayers(tournamentPlayers.players.split(','))
+  } else {
+    props.handleUpdatePlayers(tournamentPlayers.players)
+  }
+  toast.info('Jugadores actualizados')
+  closeModal()
 }
 
 const isOpen = computed({

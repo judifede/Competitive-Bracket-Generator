@@ -4,13 +4,9 @@
   </Heading>
   <form @submit.prevent="submitForm">
     <section
-      class="bg-[#323232] text-black px-12 py-8 box !flex flex-col gap-10"
+      class="bg-[#323232] text-black md:px-12 px-6 !py-8 md:box !flex flex-col gap-form_gap"
     >
-    <select
-        id="type"
-        name="type"
-        v-model="tournamentType"
-      >
+      <select id="type" name="type" v-model="tournamentType">
         <option value="Torneo">Torneo</option>
         <option value="Copa">Copa</option>
         <option value="Liga">Liga</option>
@@ -41,7 +37,7 @@
         id="players"
         name="players"
         @isTextAreaValid="handleIsTextAreaValid"
-        v-model:items="tournamentPlayers.items"
+        v-model:players="tournamentPlayers.players"
       ></FormPlayers>
 
       <div v-if="!isFormValid" class="error-message">
@@ -63,6 +59,7 @@
 <script setup>
 import Heading from '../../assets/Heading.vue'
 import FormPlayers from './FormPlayers.vue'
+import capitalize from '../../utils/utils.js'
 
 import { ref, reactive, computed } from 'vue'
 /*
@@ -77,7 +74,7 @@ const tournamentFormat = ref('Single Elimination')
 
 //FormPlayers
 const tournamentPlayers = reactive({
-  items: '',
+  players: '',
 })
 
 const isTextAreaValid = ref(false)
@@ -86,6 +83,7 @@ const handleIsTextAreaValid = (state) => {
   isTextAreaValid.value = state
 }
 //End FormPlayers
+
 const isFormValid = computed(() => {
   return (
     isTextAreaValid.value &&
@@ -98,15 +96,18 @@ const isFormValid = computed(() => {
 const emit = defineEmits(['submit-form'])
 
 const submitForm = () => {
-  if (isFormValid && tournamentPlayers.items) {
+  if (isFormValid.value && tournamentPlayers.players) {
     //Quitar saltos de línea y espacios de los extremos
-    tournamentPlayers.items = tournamentPlayers.items.trim().replace(/\n/g, '')
+    const formattedPlayers = tournamentPlayers.players.trim().replace(/\n/g, '')
 
     emit('submit-form', {
-      tournamentName: tournamentName,
-      tournamentType: tournamentType,
-      tournamentFormat: tournamentFormat,
-      tournamentPlayers: tournamentPlayers.items,
+      tournamentName: capitalize(tournamentName.value),
+      tournamentType: tournamentType.value,
+      tournamentFormat: tournamentFormat.value,
+      tournamentPlayers: formattedPlayers
+        .split(',')
+        .map((player) => capitalize(player.trim()))
+        .join(', '),
     })
   }
 }
@@ -129,8 +130,41 @@ label {
   @apply text-white container-label;
 }
 
-input, select{
+input,
+select {
   @apply box-input bg-[#2A2A2A] text-white;
+}
+
+select {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+}
+
+select::-ms-expand {
+  display: none;
+}
+
+select {
+  position: relative;
+  padding-right: 30px;
+}
+
+select::after {
+  content: '\025be';
+
+  width: 10px;
+  height: 10px;
+  display: block;
+  z-index: 1;
+  background-color: red;
+  border: 1px solid red;
+
+  position: absolute;
+  top: 5px;
+  right: 10px;
+  transform: translateY(-50%);
+  pointer-events: none;
 }
 
 ::placeholder {

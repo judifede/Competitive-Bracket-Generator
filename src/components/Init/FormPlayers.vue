@@ -2,14 +2,14 @@
   <div>
     <textarea
       placeholder="Añadir participantes separados por coma (,)"
-      class="box w-full !bg-[#2A2A2A] text-white"
+      class="box w-[281px] md:w-[370px] !bg-[#2A2A2A] text-white"
       :id="id"
       :name="name"
-      :value="items"
+      :value="players"
       @input="handleInput"
       :class="{ 'no-valid': !isTextAreaValid }"
     ></textarea>
-    <div v-if="!isTextAreaValid" class="error-message">
+    <div v-if="!isTextAreaValid" class="error-message mt-form_gap">
       El contenido debe estar separado por comas.
     </div>
   </div>
@@ -23,16 +23,22 @@ reactive -> variable de estado de un objeto
 computed -> variable de estado con propiedades calculadas
 */
 
-const props = defineProps(['items', 'id', 'name'])
+const props = defineProps(['players', 'id', 'name'])
 
-const isTextAreaValid = ref(false)
+const players = computed(() => props.players)
 
-const emit = defineEmits(['update:items', 'isTextAreaValid'])
+const isTextAreaValid = computed({
+  get: () => players.value !== null && players.value.length > 0,
+  set: (value) => {
+    emit('isTextAreaValid', value)
+  }
+})
+
+const emit = defineEmits(['update:players', 'isTextAreaValid'])
 
 const validateTextArea = (value) => {
   if (value == null) {
     isTextAreaValid.value = false
-    emit('isTextAreaValid', false)
     return
   }
   const textAreaContent = value.trim()
@@ -43,22 +49,19 @@ const validateTextArea = (value) => {
   }
 
   if (textAreaContent.includes(',')) {
-    const items = textAreaContent.split(',')
-    isTextAreaValid.value = items.every((item) => item.trim() !== '')
+    const playersList = textAreaContent.split(',')
+    isTextAreaValid.value = playersList.every((item) => item.trim() !== '')
   } else {
     isTextAreaValid.value = false
   }
-
-  emit('isTextAreaValid', isTextAreaValid.value)
 }
 
 const handleInput = (event) => {
   let newValue = event.target.value
   validateTextArea(newValue)
   newValue = newValue.trim().replace(/\n/g, '')
-  emit('update:items', newValue)
+  emit('update:players', newValue)
 }
-
 </script>
 
 <style lang="postcss" scoped>
@@ -67,7 +70,7 @@ const handleInput = (event) => {
 }
 
 .error-message {
-  @apply text-red-500;
+  @apply text-red-500 text-balance;
 }
 
 button:disabled {

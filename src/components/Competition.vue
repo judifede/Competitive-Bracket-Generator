@@ -1,6 +1,6 @@
 <template>
   <Heading tag="h2" additionalClasses="!text-2xl !h-[60px]">
-    {{competitionData.tournamentType}} {{ competitionData.tournamentName }}
+    {{ competitionData.tournamentType }} {{ competitionData.tournamentName }}
   </Heading>
 
   <section class="flex flex-col gap-6">
@@ -32,14 +32,20 @@
 
     <article class="flex justify-between gap-8">
       <div>
-        <button 
-        class="border-rounded-white px-4 py-2 font-medium border-orange-500 hover:text-orange-500"
-        @click="openUpdateModal">Actualizar brackets</button>
+        <button
+          class="border-rounded-white px-4 py-2 font-medium border-orange-500 hover:text-orange-500"
+          @click="openUpdateModal"
+        >
+          Actualizar brackets
+        </button>
       </div>
       <div>
-        <button 
-        class="border-rounded-white px-4 py-2 font-medium border-orange-500 hover:text-orange-500"
-        @click="openWinnerModal">Elegir ganador</button>
+        <button
+          class="border-rounded-white px-4 py-2 font-medium border-orange-500 hover:text-orange-500"
+          @click="openWinnerModal"
+        >
+          Elegir ganador
+        </button>
       </div>
     </article>
   </section>
@@ -47,7 +53,7 @@
     :showModal="isWinnerModalVisible"
     title="Elegir ganador"
     :winnerModal="true"
-    :items="players"
+    :players="players"
     @winnerProps="handleWinnerProps"
     @close="closeWinnerModal"
   />
@@ -56,7 +62,7 @@
     title="Actualizar brackets"
     :showModal="isUpdateModalVisible"
     :updatePlayers="true"
-    :items="players"
+    :players="players"
     :handleUpdatePlayers="handleUpdatePlayers"
     @close="closeUpdateModal"
   />
@@ -64,6 +70,7 @@
 
 <script setup>
 import Heading from '../assets/Heading.vue'
+import capitalize from '../utils/utils';
 import Brackets from './Brackets.vue'
 import PlayersModal from './PlayersModal.vue'
 
@@ -94,7 +101,8 @@ const shufflePlayers = () => {
 }
 
 const handleUpdatePlayers = (playersUpdated) => {
-  players.value = playersUpdated.split(',')
+  players.value = playersUpdated
+    .map((player) => capitalize(player.trim()))
 }
 
 const isWinnerModalVisible = ref(false)
