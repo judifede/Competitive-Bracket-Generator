@@ -42,3 +42,36 @@ textarea {
   field-sizing: content;
   @apply max-h-[120px] overflow-hidden;
 }
+
+.no-valid {
+  @apply border border-red-400;
+}
+
+::placeholder {
+  @apply !font-medium !text-white/60;
+}
+
+
+
+
+
+.error-message {
+  @apply text-red-500 text-balance;
+}
+
+button:disabled {
+  @apply bg-slate-300;
+}
+
+label {
+  @apply text-white container-label;
+}
+
+input,
+select {
+  @apply box-input bg-[#2A2A2A] text-white;
+}
+
+select{
+  @apply border-r-[16px] border-transparent;
+}

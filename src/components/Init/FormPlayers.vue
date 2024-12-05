@@ -65,27 +65,5 @@ const handleInput = (event) => {
 </script>
 
 <style lang="postcss" scoped>
-.no-valid {
-  @apply border border-red-400;
-}
 
-.error-message {
-  @apply text-red-500 text-balance;
-}
-
-button:disabled {
-  @apply bg-slate-300;
-}
-
-label {
-  @apply text-white container-label;
-}
-
-input {
-  @apply box-input bg-[#2A2A2A] text-white;
-}
-
-::placeholder {
-  @apply !font-medium !text-white/80;
-}
 </style>

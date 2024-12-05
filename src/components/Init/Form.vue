@@ -17,6 +17,7 @@
         type="text"
         id="name"
         name="name"
+        :class="{ 'no-valid': !isFormValid }"
         v-model="tournamentName"
       />
 
@@ -113,61 +114,8 @@ const submitForm = () => {
 }
 </script>
 
+<!-- TODO: CSS flecha de select  -->
 <style scoped lang="postcss">
-.no-valid {
-  @apply border border-red-400;
-}
-
-.error-message {
-  @apply text-red-500;
-}
-
-button:disabled {
-  @apply bg-slate-300;
-}
-
-label {
-  @apply text-white container-label;
-}
-
-input,
-select {
-  @apply box-input bg-[#2A2A2A] text-white;
-}
-
-select {
-  -webkit-appearance: none;
-  -moz-appearance: none;
-  appearance: none;
-}
-
-select::-ms-expand {
-  display: none;
-}
-
-select {
-  position: relative;
-  padding-right: 30px;
-}
-
-select::after {
-  content: '\025be';
-
-  width: 10px;
-  height: 10px;
-  display: block;
-  z-index: 1;
-  background-color: red;
-  border: 1px solid red;
-
-  position: absolute;
-  top: 5px;
-  right: 10px;
-  transform: translateY(-50%);
-  pointer-events: none;
-}
-
-::placeholder {
-  @apply !font-medium !text-white/80;
+select{
 }
 </style>
