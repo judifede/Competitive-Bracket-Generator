@@ -1,5 +1,7 @@
 # Competition-Bracket-Generator
 
+![image](https://github.com/user-attachments/assets/3f360c88-07c8-409a-8900-f743837a22f3)
+
 Inspiración: https://challonge.com/es/tournaments/bracket_generator.html
 
 Este proyecto nos permite crear competiciones y se realizó con el objetivo de practicar VueJS y Tailwind CSS.  
@@ -20,4 +22,3 @@ Como futuras implementaciones:
 - Mejorar el renderizado dinámico del SVG.
 
 
-![image](https://github.com/user-attachments/assets/3f360c88-07c8-409a-8900-f743837a22f3)
