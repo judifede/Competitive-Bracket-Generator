@@ -4,7 +4,9 @@
   </Heading>
 
   <section class="flex flex-col gap-6">
-    <article class="flex items-center justify-between min-w-[500px]">
+    <article class="flex flex-wrap items-center justify-center
+     gap-5 m-auto 
+     md:justify-between md:min-w-[500px]">
       <button
         class="border-rounded-white px-4 py-2 hover:text-orange-500 hover:border-orange-500"
         @click="goBack"
@@ -26,7 +28,7 @@
         </span>
       </p>
     </article>
-    <article class="min-h-16 flex">
+    <article class="min-h-16 flex m-auto">
       <Brackets :players="players" :winnerProps="winnerProps"></Brackets>
     </article>
 

@@ -43,9 +43,9 @@
 
     <!-- Trofeo de ganador -->
     <g
-      :transform="`translate(${rectWidth + lineLength * 3.5 + rectWidth / 2.4},${
-        svgHeight / 2 - rectHeight / 2 - 20
-      }) scale(${0.0032},-${0.0032})`"
+      :transform="`translate(
+      ${dimensionesWinner.trofeo_x},
+      ${dimensionesWinner.trofeo_y}) scale(${dimensionesWinner.trofeo_scale},-${dimensionesWinner.trofeo_scale})`"
       class="fill-orange-400"
     >
       <path
@@ -68,8 +68,8 @@
     <!-- Rectángulo final para el ganador -->
     <g>
       <rect
-        :x="rectWidth + lineLength * 4"
-        :y="svgHeight / 2 - rectHeight / 2"
+        :x="dimensionesWinner.rectangulo_final_x"
+        :y="dimensionesWinner.rectangulo_final_y"
         :width="rectWidth"
         :height="rectHeight"
         fill="none"
@@ -77,8 +77,8 @@
       />
       <!-- Texto ganador -->
       <text
-        :x="rectWidth + lineLength * 4 + 10"
-        :y="svgHeight / 2 - rectHeight / 2 + 20"
+        :x="dimensionesWinner.texto_ganador_x"
+        :y="dimensionesWinner.texto_ganador_y"
         font-size="14"
         fill="white"
       >
@@ -89,7 +89,7 @@
 </template>
 
 <script setup>
-import { computed } from 'vue'
+import { ref, computed, onMounted, onUnmounted, reactive } from 'vue'
 
 const props = defineProps({
   players: {
@@ -102,17 +102,30 @@ const props = defineProps({
   },
 })
 
+const windowWidth = ref(window.innerWidth)
+const responsiveMode = ref(false)
+
+const updateWindowWidth = () => {
+  windowWidth.value = window.innerWidth
+}
+
+onMounted(() => {
+  window.addEventListener('resize', updateWindowWidth)
+})
+
+onUnmounted(() => {
+  window.removeEventListener('resize', updateWindowWidth)
+})
+
 const rectWidth = computed(() => {
   let calculatedWidth
 
-   if (props.players.length <= 2) {
-    calculatedWidth = 50 + (
-      Math.max(...props.players.map((name) => name.toString().length)) * 20
-    )
+  if (props.players.length <= 2) {
+    calculatedWidth =
+      50 + Math.max(...props.players.map((name) => name.toString().length)) * 15
   } else {
-    calculatedWidth = 50 + (
-      Math.max(...props.players.map((name) => name.toString().length)) * 15
-    )
+    calculatedWidth =
+      50 + Math.max(...props.players.map((name) => name.toString().length)) * 10
   }
 
   return Math.min(calculatedWidth, 300)
@@ -122,13 +135,35 @@ const rectHeight = 30
 const gap = 40
 const lineLength = 30
 
-const svgWidth = computed(() => rectWidth.value * 3 + lineLength * 2)
+// const svgWidth = computed(() => rectWidth.value * 3 + lineLength * 2)
+const svgWidth = computed(() => {
+  const baseWidth = rectWidth.value * 3 + lineLength * 3
+  console.log(windowWidth.value)
+
+  if (windowWidth.value <= 768) {
+    responsiveMode.value = true
+    return baseWidth * 0.7
+  } else if (windowWidth.value > 768) {
+    responsiveMode.value = false
+    return baseWidth
+  }
+})
+
 const svgHeight = computed(() =>
-  Math.max(
-    props.players.length * (rectHeight + gap * 1.2),
-    rectHeight + gap
-  )
+  Math.max(props.players.length * (rectHeight + gap * 1.2), rectHeight + gap)
 )
+
+const dimensionesWinner = computed(() => ({
+  texto_ganador_x: responsiveMode.value
+    ? lineLength * 5 + 10
+    : lineLength * 8 + 10,
+  texto_ganador_y: 0 + 20,
+  rectangulo_final_x: responsiveMode.value ? lineLength * 5 : lineLength * 8,
+  rectangulo_final_y: 0,
+  trofeo_x: responsiveMode.value ? lineLength * 6 : lineLength * 8 + 35,
+  trofeo_y: lineLength + 50,
+  trofeo_scale: 0.0032,
+}))
 
 const players = computed(() => props.players)
 </script>
